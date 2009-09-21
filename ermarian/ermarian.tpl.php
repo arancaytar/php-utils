@@ -2,24 +2,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <!-- 
+    Template for Ermarian Network (http://ermarian.net/)
+    Copyright Arancaytar <arancaytar@ermarian.net> 2006-2009.
+  -->
+  
   <head>
-    <title><?=$title?> | <?=$site_name?></title>
+    <title><?=$raw_title ? $raw_title : "$title | $site_name"?></title>
 
     <!-- meta -->
     <meta name="author" lang="en" content="<?=$meta->author?>" />
     <meta name="description" lang="en" content="<?=$meta->description?>" />
-    <meta name="keywords" lang="en" content="<?=implode(', ', $meta->keywords)?>, ermarian, arancaytar" />
+    <meta name="keywords" lang="en" content="<?=$meta->keywords?>" />
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
     <?php if ($meta->extra) { print $meta->extra; } ?>
+
+    <!-- /meta -->
+    
     <base href="http://ermarian.net" />
     
     <!-- related documents -->
-    
     <link rel="prev"  href="<?=$links->prev?>" />
     <link rel="next"  href="<?=$links->next?>" />
     <link rel="contents" href="<?=$links->index?>" />
     <link rel="start" href="<?=$links->main?>" />
     <link rel="help" href="<?=$links->about?>" />
+    <!-- /related documents -->
     
     <?php if ($links->rss) { print $links->rss; } ?>
 
@@ -39,6 +47,8 @@
 
     <?=$styles?>
     <?=$scripts?>
+
+    <!-- /styles and scripts -->
   </head>
   
   <body>
@@ -61,7 +71,10 @@
       <!-- main -->
       <div id="main">
         <div id="main2">
-          <!--ads-->
+          <!-- ads -->
+          <?=TEMPLATE_AD?>
+
+          <!-- /ads -->
           
           <h2><?=$title?></h2>
           
@@ -91,7 +104,7 @@
           <div class="filled-box" id="copyright">
             All content on this page, unless stated otherwise, is owned by 
             <a class="mail" title="arancaytar.ilyaran@gmail.com" href="mailto:&quot;Arancaytar Ilyaran&quot; &lt;arancaytar.ilyaran@gmail.com&gt;?subject=Enquiry about Ermarian Network site&amp;body=%0D--%0DSent by ermarian.net contact link">Arancaytar</a>, 
-            &copy; 2006-2007, all rights reserved.
+            &copy; 2006-2009, all rights reserved.
             No responsibility is taken for the content of external links, which are marked by 
             <img src="images/external.png" alt="a blue arrow icon" />.
           </div>
