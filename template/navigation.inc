@@ -26,14 +26,15 @@ function navigation_tree($web_root = NULL, $recrawl = FALSE, $extension = 'info'
   return $tree[$web_root];
 }
 
-function navigation_title() {
+function navigation_field($field) {
   static $list = array();
   if (!$list) {
     $list = navigation_list();
   }
-  preg_match('/^\/([^?]+?)(\.(html|htm|php))?$/', $_SERVER['REQUEST_URI'], $match);
+  preg_match('/^\/([^?]*?)(\/|\.(html|htm|php))?$/', $_SERVER['REQUEST_URI'], $match);
   $request = $match[1];
-  return isset($list[$request]) ? $list[$request]->title : "";
+
+  return isset($list[$request]) ? $list[$request]->$field : "";
 }
 
 function navigation_parse_cache($data) {  
@@ -117,7 +118,7 @@ function l($entry) {
 function navigation_crawl($webroot, $extension = 'info') {
   $files = array();
   $pages = array();
-  $cmd = "find $webroot -name '*.$extension'|sort";
+  $cmd = "find $webroot -name '*.$extension' -not -name '.*'|sort";
   exec($cmd, $files);
   foreach ($files as $file) {
     $data = file($file);

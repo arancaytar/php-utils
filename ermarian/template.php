@@ -34,8 +34,6 @@ function theme_page($variables) {
     ),
   );
 
-  if (!$variables['navigation']) $variables['navigation'] = theme_navigation(navigation_tree());
-  
   $variables['meta'] = (object)((array)$variables['meta'] + array(
     'author' => htmlentities('Arancaytar Ilyaran <arancaytar@ermarian.net>'),
     'description' => '',
@@ -51,6 +49,10 @@ function theme_page($variables) {
     'about' => '',
     'rss' => '',
   ));
+
+  if (!$variables['title']) $variables['title'] = navigation_field('title');
+  if (!$variables['navigation']) $variables['navigation'] = theme_navigation(navigation_tree());
+  if (!$variables['meta']->description) $variables['meta']->description = navigation_field('description');
 
   if ($variables['options']['content.add_id']) {
     $variables['content'] = theme_heading_id($variables['content']);
