@@ -6,7 +6,7 @@ define('DB_DEFAULT_USER', 'admin');
 define('DB_DEFAULT_DATABASE', 'misc');
 define('DB_DEFAULT_PREFIX', '');
 
-define('DB_QUERY_REGEXP', '/(%d|%s|%%|%f|%b)/');
+define('DB_QUERY_REGEXP', '/(%a|%d|%s|%%|%f|%b)/');
 
 class Database {
   var $config;
@@ -48,7 +48,7 @@ class Database {
     $args = func_get_args();
     array_shift($args);
     $query = $this->_prefix_tables($query);
-    if (isset($args[0]) and is_array($args[0])) { // 'All arguments in one array' syntax
+    if (isset($args[0]) and is_array($args[0]) and count($args) == 1) { // 'All arguments in one array' syntax
       $args = $args[0];
     }
     _db_escape_args($args, TRUE);
@@ -99,8 +99,15 @@ function _db_escape_args($match, $init = FALSE) {
     $args = $match;
     return;
   }
+  if (isset($_GET['debug'])) var_dump($match, $args, "<hr />");
 
   switch ($match[1]) {
+    case '%a':
+      $t = array();
+      foreach (array_shift($args) as $arg) {
+        $t[] = _db_arg($match[1], $arg);
+      }
+      return '(' . implode(', ', $t) . ')';
     case '%d': // We must use type casting to int to convert FALSE/NULL/(TRUE?)
       return (int) array_shift($args); // We don't need db_escape_string as numbers are db-safe
     case '%s':
@@ -111,6 +118,21 @@ function _db_escape_args($match, $init = FALSE) {
       return (float) array_shift($args);
     case '%b': // binary data
       return "'" . mysql_escape_string(array_shift($args)) . "'";
+  }
+}
+
+function _db_arg($type, $arg) {
+  switch ($type) {
+    case '%d': // We must use type casting to int to convert FALSE/NULL/(TRUE?)
+      return (int) $arg; // We don't need db_escape_string as numbers are db-safe
+    case '%s':
+      return mysql_escape_string($arg);
+    case '%%':
+      return '%';
+    case '%f':
+      return (float) $arg;
+    case '%b': // binary data
+      return "'" . mysql_escape_string($arg) . "'";
   }
 }
 
@@ -136,6 +158,9 @@ class DatabaseResult {
       }
       return $col;
     }
+  }
+  function row() {
+    return $this->getArray();
   }
   
   function getArray() {
