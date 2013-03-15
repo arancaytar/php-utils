@@ -1,4 +1,6 @@
 <?php
+require_once 'template/navigation.inc';
+
 define('TEMPLATE', dirname(__FILE__) . '/ermarian.tpl.php');
 
 define('TEMPLATE_AD', <<<END
@@ -31,9 +33,11 @@ function theme_page($variables) {
       'content.add_id' => TRUE,
     ),
   );
+
+  if (!$variables['navigation']) $variables['navigation'] = theme_navigation(navigation_tree());
   
   $variables['meta'] = (object)((array)$variables['meta'] + array(
-    'author' => 'Arancaytar Ilyaran <arancaytar@ermarian.net>',
+    'author' => htmlentities('Arancaytar Ilyaran <arancaytar@ermarian.net>'),
     'description' => '',
     'keywords' => array(),
     'extra' => '',
@@ -60,6 +64,13 @@ function theme_page($variables) {
     }
     $scripts = implode("\n", $scripts);
   }
+  if (is_array($styles)) {
+    foreach ($styles as $i => $style) {
+      $styles[$i] = "<link rel='stylesheet' type='text/css' href='$style'></link>";
+    }
+    $styles = implode("\n", $styles);
+  }
+  $meta->keywords = implode(', ', $meta->keywords);
 
   
   ob_start();
