@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <!-- 
     Template for Ermarian Network (http://ermarian.net/)
-    Copyright Arancaytar <arancaytar@ermarian.net> 2006-2009.
+    Copyright Arancaytar <arancaytar@ermarian.net> 2006-2011.
   -->
   
   <head>
@@ -95,8 +95,8 @@
             </a>
             This page can be viewed in any standards-compliant browser.<br/>
             Recommended: 
-            <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox 3.0</a> or 
-            <a href="http://www.opera.com">Opera 9.5</a>.
+            <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,  
+            <a href="http://www.opera.com">Opera</a>, <a href="http://www.chromium.org//">Chromium</a>
           </div>
           <!-- /validation -->
 
@@ -104,7 +104,7 @@
           <div class="filled-box" id="copyright">
             All content on this page, unless stated otherwise, is owned by 
             <a class="mail" title="arancaytar.ilyaran@gmail.com" href="mailto:&quot;Arancaytar Ilyaran&quot; &lt;arancaytar.ilyaran@gmail.com&gt;?subject=Enquiry about Ermarian Network site&amp;body=%0D--%0DSent by ermarian.net contact link">Arancaytar</a>, 
-            &copy; 2006-2009, all rights reserved.
+            &copy; 2006-2013, all rights reserved.
             No responsibility is taken for the content of external links, which are marked by 
             <img src="images/external.png" alt="a blue arrow icon" />.
           </div>
