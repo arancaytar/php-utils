@@ -55,7 +55,7 @@
     <div id="content">
       <!-- header -->
       <div class="filled-box head-bar" id="title">
-        <h1><?=$site_name?></h1>
+        <h1><a href="/"><?=$site_name?></a></h1>
       </div>
       <!-- /header -->
       
