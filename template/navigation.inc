@@ -33,7 +33,7 @@ function navigation_title() {
   }
   preg_match('/^\/([^?]+?)(\.(html|htm|php))?$/', $_SERVER['REQUEST_URI'], $match);
   $request = $match[1];
-  return isset($list[$request]) ? $list[$request]['title'] : "";
+  return isset($list[$request]) ? $list[$request]->title : "";
 }
 
 function navigation_parse_cache($data) {  
