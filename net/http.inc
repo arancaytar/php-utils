@@ -54,6 +54,7 @@ function http($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 
     // host that do not take into account the port number.
     'Host' => "Host: $host",
     'User-Agent' => 'User-Agent: Ermarian Network (+http://ermarian.net) Drupal/7.0 (+http://drupal.org/)',
+    'Referer' => 'Referer: ' . isset($_SERVER['HTTP_HOST']) ? @$_SERVER['HTTP_HOST'] : '',
   );
   
   if ($data) {
