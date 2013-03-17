@@ -31,7 +31,7 @@ function navigation_field($field) {
   if (!$list) {
     $list = navigation_list();
   }
-  preg_match('/^\/([^?]*?)(\/|\.(html|htm|php))?$/', $_SERVER['REQUEST_URI'], $match);
+  preg_match('/^\/([^?]*?)(\/|\.(html|htm|php))?(\?.*)?$/', $_SERVER['REQUEST_URI'], $match);
   $request = $match[1];
 
   return isset($list[$request]) ? $list[$request]->$field : "";
