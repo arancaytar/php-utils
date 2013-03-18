@@ -1,17 +1,18 @@
 <!DOCTYPE html>
   <!-- 
     Template for Ermarian Network (http://ermarian.net/)
-    Copyright Arancaytar <arancaytar@ermarian.net> 2006-2011.
+    Copyright Arancaytar <arancaytar@ermarian.net> 2006-2013.
   -->
   
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
     <title><?=$raw_title ? $raw_title : "$title | $site_name"?></title>
 
     <!-- meta -->
     <meta name="author" lang="en" content="<?=$meta->author?>" />
     <meta name="description" lang="en" content="<?=$meta->description?>" />
     <meta name="keywords" lang="en" content="<?=$meta->keywords?>" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <?php if ($meta->extra) { print $meta->extra; } ?>
 
     <!-- /meta -->
