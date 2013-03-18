@@ -91,7 +91,7 @@ function _theme_heading_id_($matches) {
   $content = $matches[3];
 
   if (!preg_match('/["\'\s]id=/', $args)) {
-    $id = strip_tags($content);
+    $id = urlencode(strip_tags($content));
     $args = ' id="' . $id . '"' . $args;
   }
   return "<h$level$args>$content</h$level>";
