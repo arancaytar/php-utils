@@ -16,7 +16,7 @@
 
     <!-- /meta -->
     
-    <base href="http://ermarian.net" />
+    <base href="http://<?=$base?>" />
     
     <!-- related documents -->
     <? if ($links->prev) : ?><link rel="prev"  href="<?=$links->prev?>" /><? endif; ?>

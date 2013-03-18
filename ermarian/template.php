@@ -32,6 +32,7 @@ function theme_page($variables) {
     'options' => array(
       'content.add_id' => TRUE,
     ),
+    'base' => $_SERVER['HTTP_HOST'],
   );
 
   $variables['meta'] = (object)((array)$variables['meta'] + array(
