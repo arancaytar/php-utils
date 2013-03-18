@@ -69,7 +69,7 @@ function theme_page($variables) {
   }
   if (is_array($styles)) {
     foreach ($styles as $i => $style) {
-      $styles[$i] = "<link rel='stylesheet' type='text/css' href='$style'></link>";
+      $styles[$i] = "<link rel='stylesheet' type='text/css' href='$style' />";
     }
     $styles = implode("\n", $styles);
   }
