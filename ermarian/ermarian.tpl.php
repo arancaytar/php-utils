@@ -30,6 +30,7 @@
     <?php if ($links->rss) { print $links->rss; } ?>
 
     <!-- styles and scripts -->
+    <link rel="icon" href="images/icon" />
     <link rel="stylesheet" 
           type="text/css" 
           media="all" 
