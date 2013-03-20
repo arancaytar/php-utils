@@ -33,15 +33,15 @@
     <link rel="stylesheet" 
           type="text/css" 
           media="all" 
-          href="style/default.css" />
+          href="css/default.css" />
     <link rel="stylesheet" 
           type="text/css" 
           media="screen" 
-          href="style/screen.css" />
+          href="css/screen.css" />
     <link rel="stylesheet" 
           type="text/css" 
           media="print" 
-          href="style/print.css" />
+          href="css/print.css" />
 
     <?=$styles?>
     <?=$scripts?>
