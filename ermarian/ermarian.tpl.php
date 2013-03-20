@@ -61,58 +61,54 @@
       <div class="filled-box side-bar" id="navside">
         <h2 class="navside">Navigation</h2>
         <div id="menu"><?=$navigation?></div>
-        <div class="filler">
-        </div>
       </div>
       <!-- /sidebar -->
       
-      <!-- main -->
-      <div id="main">
-        <div id="main2">
-          <!-- ads -->
-          <?=TEMPLATE_AD?>
+      <!-- page-footer -->
+      <div id="page-footer">
+        <!-- ads -->
+        <?=TEMPLATE_AD?>
 
-          <!-- /ads -->
-          
-          <h2><?=$title?></h2>
-          
-          <!-- text -->
-          <div id="page-inner">
-            <?=$content?>
-            
-          </div>
-          <!-- /text -->
-          
-          <!-- site validation -->
-          <div class="filled-box" id="footer">
-            <a href="http://validator.w3.org/check?uri=referer">
-              <img src="images/validation/valid-html5.png" alt="Valid HTML 5 Strict" height="31" width="88" style="float:left" />
-            </a>
-            <a href="http://jigsaw.w3.org/css-validator/validator">
-              <img style="border:0;width:88px;height:31px;float:left" src="images/validation/valid-css.png" alt="Valid CSS" />
-            </a>
-            This page can be viewed in any standards-compliant browser.<br/>
-            Recommended: 
-            <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,  
-            <a href="http://www.opera.com">Opera</a>, <a href="http://www.chromium.org//">Chromium</a>
-          </div>
-          <!-- /validation -->
-
-          <!-- copyright -->
-          <div class="filled-box" id="copyright">
-            All content on this page, unless stated otherwise, is owned by 
-            <a class="mail" title="arancaytar.ilyaran@gmail.com" href="<?=urlencode(htmlentities('mailto:"Arancaytar Ilyaran" <arancaytar.ilyaran@gmail.com>?subject=[ermarian.net] (enter subject)&body=
---
-Sent by ermarian.net contact link'))?>">Arancaytar</a>, 
-            &copy; 2006-2013, all rights reserved.
-            No responsibility is taken for the content of external links, which are marked by 
-            <img src="images/external.png" alt="a blue arrow icon" />.
-          </div>
-          <!-- /copyright -->
+        <!-- /ads -->
+        
+        <h2><?=$title?></h2>
+        
+        <!-- page-inner -->
+        <div id="page-inner">
+          <?=$content?>
 
         </div>
+        <!-- /page-inner -->
+        
+        <!-- site validation -->
+        <div class="filled-box" id="footer">
+          <a href="http://validator.w3.org/check?uri=referer">
+            <img src="images/validation/valid-html5.png" alt="Valid HTML 5 Strict" height="31" width="88" style="float:left" />
+          </a>
+          <a href="http://jigsaw.w3.org/css-validator/validator">
+            <img style="border:0;width:88px;height:31px;float:left" src="images/validation/valid-css.png" alt="Valid CSS" />
+          </a>
+          This page can be viewed in any standards-compliant browser.<br/>
+          Recommended: 
+          <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,  
+          <a href="http://www.opera.com">Opera</a>, <a href="http://www.chromium.org//">Chromium</a>
+        </div>
+        <!-- /validation -->
+
+        <!-- copyright -->
+        <div class="filled-box" id="copyright">
+          All content on this page, unless stated otherwise, is owned by 
+          <a class="mail" title="arancaytar.ilyaran@gmail.com" href="<?=urlencode(htmlentities('mailto:"Arancaytar Ilyaran" <arancaytar.ilyaran@gmail.com>?subject=[ermarian.net] (enter subject)&body=
+--
+Sent by ermarian.net contact link'))?>">Arancaytar</a>, 
+          &copy; 2006-2013, all rights reserved.
+          No responsibility is taken for the content of external links, which are marked by 
+          <img src="images/external.png" alt="a blue arrow icon" />.
+        </div>
+        <!-- /copyright -->
+
       </div>
-      <!-- /main -->
+      <!-- /page-footer -->
       
     </div>
     <!-- /content -->
