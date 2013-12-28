@@ -1,6 +1,8 @@
 <?php
 
-function navigation_list($web_root = NULL, $recrawl = FALSE, $extension = 'info') {
+define('NAV_EXT', 'menu');
+
+function navigation_list($web_root = NULL, $recrawl = FALSE, $extension = NAV_EXT) {
   static $list = array();
   if (!$web_root) $web_root = $_SERVER['DOCUMENT_ROOT'];
 
@@ -16,7 +18,7 @@ function navigation_list($web_root = NULL, $recrawl = FALSE, $extension = 'info'
   return $list[$web_root]; 
 }
 
-function navigation_tree($web_root = NULL, $recrawl = FALSE, $extension = 'info') {
+function navigation_tree($web_root = NULL, $recrawl = FALSE, $extension = NAV_EXT) {
   static $tree = array();
   if (!$web_root) $web_root = $_SERVER['DOCUMENT_ROOT'];
 
@@ -115,7 +117,8 @@ function l($entry) {
   }
 }
 
-function navigation_crawl($webroot, $extension = 'info') {
+function navigation_crawl($webroot, $extension = NAV_EXT) {
+  $webroot = realpath($webroot);
   $files = array();
   $pages = array();
   $cmd = "find $webroot -name '*.$extension' -not -name '.*'|sort";
