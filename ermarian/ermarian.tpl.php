@@ -43,6 +43,10 @@
           type="text/css" 
           media="print" 
           href="css/print.css" />
+    <link rel="alternate stylesheet"
+          type="text/css"
+          title="Print"
+          href="css/print.css" />
 
     <?=$styles?>
     <?=$scripts?>
@@ -68,7 +72,9 @@
       <!-- page-footer -->
       <div id="page-footer">
         <!-- ads -->
+        <div id="advertisement">
         <?=TEMPLATE_AD?>
+        </div>
 
         <!-- /ads -->
         
