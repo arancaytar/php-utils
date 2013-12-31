@@ -21,7 +21,7 @@ class DowPeeron extends DowFeed {
     elseif ($time > time()) {
       return array(); // Do I LOOK like fucking Nostradamus?
     }
-    
+
     $date = explode('-', date('Y-m-d', $time + 3600));
     $url = str_replace(array('%Y', '%m', '%d'), $date, DOW_PEERON_URL);
     var_dump($url);

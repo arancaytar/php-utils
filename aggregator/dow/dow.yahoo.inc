@@ -17,7 +17,7 @@ class DowYahoo extends DowFeed {
       if (date('H', time() + 3*3600) < 10) {
         return array(); // Give me some time. The Dow opens at 0930.
       }
-      
+
       $url = DOW_YAHOO_URL_TODAY;
     }
     elseif ($time > time()) {

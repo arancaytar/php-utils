@@ -41,7 +41,7 @@ function theme_page($variables) {
     'keywords' => array(),
     'extra' => '',
   ));
-  
+
   $variables['links'] = (object)((array)$variables['links'] + array(
     'prev' => '',
     'next' => '',
@@ -75,7 +75,7 @@ function theme_page($variables) {
   }
   $meta->keywords = implode(', ', $meta->keywords);
 
-  
+
   ob_start();
   require_once TEMPLATE;
   return ob_get_clean();

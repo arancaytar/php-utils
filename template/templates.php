@@ -14,9 +14,9 @@ function theme_rss($feed) {
 
   // How often can I say field on one line? Let's see:
   foreach ($feed as &$field) if ("$field" == $field) $field = htmlentities($field);
-  
+
   if (!is_array($feed['items'])) $feed['items'] = array();
-  
+
   foreach ($feed['items'] as &$item) {
     $item += array(
       'title' => '',
@@ -29,7 +29,7 @@ function theme_rss($feed) {
 
     foreach ($item as &$field) $field = htmlentities($field);
   }
-  
+
   require_once 'net/mime.inc';
   mime('rss');
 

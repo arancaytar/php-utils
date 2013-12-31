@@ -15,7 +15,7 @@ function navigation_list($web_root = NULL, $recrawl = FALSE, $extension = NAV_EX
   $data = file("$web_root/.navigation.cache");
 
   $list[$web_root] = navigation_parse_cache($data);
-  return $list[$web_root]; 
+  return $list[$web_root];
 }
 
 function navigation_tree($web_root = NULL, $recrawl = FALSE, $extension = NAV_EXT) {
@@ -23,7 +23,7 @@ function navigation_tree($web_root = NULL, $recrawl = FALSE, $extension = NAV_EX
   if (!$web_root) $web_root = $_SERVER['DOCUMENT_ROOT'];
 
   if (isset($tree[$web_root])) return $tree[$web_root];
-  
+
   $tree[$web_root] = navigation_build_tree(navigation_list($web_root));
   return $tree[$web_root];
 }
@@ -39,7 +39,7 @@ function navigation_field($field) {
   return isset($list[$request]) ? $list[$request]->$field : "";
 }
 
-function navigation_parse_cache($data) {  
+function navigation_parse_cache($data) {
   $parsed = array();
   foreach ($data as $line) {
     if (!preg_match('/([^ ]+)\s+(.+) +: +(.*?)(\/([0-9]*))?$/', trim($line), $match)) continue;
@@ -127,11 +127,11 @@ function navigation_crawl($webroot, $extension = NAV_EXT) {
     $data = file($file);
     $depth = -1;
     $resource = array(
-      'title' => '', 
-      'description' => '', 
+      'title' => '',
+      'description' => '',
       'resource' => substr($file, strlen($webroot) + 1, -1 * strlen($extension) - 1),
     );
-    
+
     foreach ($data as $line) {
       if (preg_match('/([^ ]+?) *= *(.+)/', trim($line), $match)) {
         if ($match[1] == 'resource') $depth = count(explode('/', $resource['resource'])) - 1;

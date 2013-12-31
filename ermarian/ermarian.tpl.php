@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-  <!-- 
+  <!--
     Template for Ermarian Network (http://ermarian.net/)
     Copyright Arancaytar <arancaytar@ermarian.net> 2006-2013.
   -->
-  
+
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+
     <title><?=$raw_title ? $raw_title : "$title | $site_name"?></title>
 
     <!-- meta -->
@@ -16,9 +16,9 @@
     <?php if ($meta->extra) { print $meta->extra; } ?>
 
     <!-- /meta -->
-    
+
     <base href="http://<?=$base?>" />
-    
+
     <!-- related documents -->
     <? if ($links->prev) : ?><link rel="prev"  href="<?=$links->prev?>" /><? endif; ?>
     <? if ($links->next) : ?><link rel="next"  href="<?=$links->next?>" /><? endif; ?>
@@ -26,22 +26,22 @@
     <? if ($links->main) : ?><link rel="start" href="<?=$links->main?>" /><? endif; ?>
     <? if ($links->about) : ?><link rel="help" href="<?=$links->about?>" /><? endif; ?>
     <!-- /related documents -->
-    
+
     <?php if ($links->rss) { print $links->rss; } ?>
 
     <!-- styles and scripts -->
     <link rel="icon" href="images/icon" />
-    <link rel="stylesheet" 
-          type="text/css" 
-          media="all" 
+    <link rel="stylesheet"
+          type="text/css"
+          media="all"
           href="css/default.css" />
-    <link rel="stylesheet" 
-          type="text/css" 
-          media="screen" 
+    <link rel="stylesheet"
+          type="text/css"
+          media="screen"
           href="css/screen.css" />
-    <link rel="stylesheet" 
-          type="text/css" 
-          media="print" 
+    <link rel="stylesheet"
+          type="text/css"
+          media="print"
           href="css/print.css" />
     <link rel="alternate stylesheet"
           type="text/css"
@@ -53,7 +53,7 @@
 
     <!-- /styles and scripts -->
   </head>
-  
+
   <body>
     <div id="content">
       <!-- header -->
@@ -61,14 +61,14 @@
         <h1><a href="/"><?=$site_name?></a></h1>
       </div>
       <!-- /header -->
-      
+
       <!-- sidebar -->
       <div class="filled-box side-bar" id="navside">
         <h2 class="navside">Navigation</h2>
         <div id="menu"><?=$navigation?></div>
       </div>
       <!-- /sidebar -->
-      
+
       <!-- page-footer -->
       <div id="page-footer">
         <!-- ads -->
@@ -77,16 +77,16 @@
         </div>
 
         <!-- /ads -->
-        
+
         <h2><?=$title?></h2>
-        
+
         <!-- page-inner -->
         <div id="page-inner">
           <?=$content?>
 
         </div>
         <!-- /page-inner -->
-        
+
         <!-- site validation -->
         <div class="filled-box" id="footer">
           <a href="http://validator.w3.org/check?uri=referer">
@@ -96,27 +96,27 @@
             <img style="border:0;width:88px;height:31px;float:left" src="images/validation/valid-css.png" alt="Valid CSS" />
           </a>
           This page can be viewed in any standards-compliant browser.<br/>
-          Recommended: 
-          <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,  
+          Recommended:
+          <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,
           <a href="http://www.opera.com">Opera</a>, <a href="http://www.chromium.org//">Chromium</a>
         </div>
         <!-- /validation -->
 
         <!-- copyright -->
         <div class="filled-box" id="copyright">
-          All content on this page, unless stated otherwise, is owned by 
+          All content on this page, unless stated otherwise, is owned by
           <a class="mail" title="arancaytar.ilyaran@gmail.com" href="<?=urlencode(htmlentities('mailto:"Arancaytar Ilyaran" <arancaytar.ilyaran@gmail.com>?subject=[ermarian.net] (enter subject)&body=
 --
-Sent by ermarian.net contact link'))?>">Arancaytar</a>, 
+Sent by ermarian.net contact link'))?>">Arancaytar</a>,
           &copy; 2006-2014, all rights reserved.
-          No responsibility is taken for the content of external links, which are marked by 
+          No responsibility is taken for the content of external links, which are marked by
           <img src="images/external.png" alt="a blue arrow icon" />.
         </div>
         <!-- /copyright -->
 
       </div>
       <!-- /page-footer -->
-      
+
     </div>
     <!-- /content -->
   </body>
