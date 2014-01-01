@@ -19,7 +19,7 @@ END
 );
 
 function theme_page($variables) {
-  $variables += array(
+  $variables += [
     'site_name' => "The Ermarian Network",
     'links' => array(),
     'styles' => '',
@@ -33,7 +33,8 @@ function theme_page($variables) {
       'content.add_id' => TRUE,
     ),
     'base' => $_SERVER['HTTP_HOST'],
-  );
+    'request' => '',
+  ];
   $navigation = NavigationMenu::load();
 
   $variables['meta'] = (object)((array)$variables['meta'] + array(
@@ -85,7 +86,6 @@ function theme_page($variables) {
     $styles = implode("\n", $styles);
   }
   $meta->keywords = implode(', ', $meta->keywords);
-
 
   ob_start();
   require_once TEMPLATE;

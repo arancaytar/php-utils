@@ -3,7 +3,7 @@
     Template for Ermarian Network (http://ermarian.net/)
     Copyright Arancaytar <arancaytar@ermarian.net> 2006-2013.
   -->
-
+<html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
