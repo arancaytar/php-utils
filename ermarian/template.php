@@ -34,6 +34,7 @@ function theme_page($variables) {
     ),
     'base' => $_SERVER['HTTP_HOST'],
   );
+  $navigation = NavigationMenu::load();
 
   $variables['meta'] = (object)((array)$variables['meta'] + array(
     'author' => htmlentities('Arancaytar Ilyaran <arancaytar@ermarian.net>'),
@@ -51,9 +52,19 @@ function theme_page($variables) {
     'rss' => '',
   ));
 
-  if (!$variables['title']) $variables['title'] = navigation_field('title');
-  if (!$variables['navigation']) $variables['navigation'] = theme_navigation(navigation_tree());
-  if (!$variables['meta']->description) $variables['meta']->description = navigation_field('description');
+  if (!$variables['request']) {
+    if (preg_match('/^\/(?<path>[^?]*?)(?:\/(?:index)?)?(?:\.(?:html|php))?(?:\?.*)?$/', $_SERVER['REQUEST_URI'], $match)) {
+      $variables['request'] = $match['path'];
+    }
+  }
+
+  if (!empty($navigation->index[$variables['request']])) {
+    $item = $navigation->index[$variables['request']];
+    if (!$variables['title']) $variables['title'] = $item->title;
+    if (!$variables['meta']->description) $variables['meta']->description = $item->description;
+  }
+
+  if (!$variables['navigation']) $variables['navigation'] = $navigation->html($variables['request']);
 
   if ($variables['options']['content.add_id']) {
     $variables['content'] = theme_heading_id($variables['content']);

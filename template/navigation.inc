@@ -1,150 +1,134 @@
 <?php
 
 define('NAV_EXT', 'menu');
+define('WEB_ROOT', rtrim($_SERVER['DOCUMENT_ROOT']));
 
-function navigation_list($web_root = NULL, $recrawl = FALSE, $extension = NAV_EXT) {
-  static $list = array();
-  if (!$web_root) $web_root = $_SERVER['DOCUMENT_ROOT'];
-
-  if (isset($list[$web_root])) return $list[$web_root];
-
-  if ($recrawl || !file_exists("$web_root/.navigation.cache")) {
-    navigation_crawl($web_root, $extension);
+class NavigationMenu {
+  function __construct($index, $tree) {
+    $this->index = $index;
+    $this->tree = $tree;
+  }
+  
+  function save_to_file($filename) {
+    file_put_contents($filename, $this->save_data());
   }
 
-  $data = file("$web_root/.navigation.cache");
-
-  $list[$web_root] = navigation_parse_cache($data);
-  return $list[$web_root];
-}
-
-function navigation_tree($web_root = NULL, $recrawl = FALSE, $extension = NAV_EXT) {
-  static $tree = array();
-  if (!$web_root) $web_root = $_SERVER['DOCUMENT_ROOT'];
-
-  if (isset($tree[$web_root])) return $tree[$web_root];
-
-  $tree[$web_root] = navigation_build_tree(navigation_list($web_root));
-  return $tree[$web_root];
-}
-
-function navigation_field($field) {
-  static $list = array();
-  if (!$list) {
-    $list = navigation_list();
+  function save_data() {
+    return serialize([$this->index, $this->tree]);
   }
-  preg_match('/^\/(?<path>[^?]*?)(?:\/(?:index)?)?(?:\.(?:html|php))?(?:\?.*)?$/', $_SERVER['REQUEST_URI'], $match);
-  $request = $match[1];
-
-  return isset($list[$request]) ? $list[$request]->$field : "";
-}
-
-function navigation_parse_cache($data) {
-  $parsed = array();
-  foreach ($data as $line) {
-    if (!preg_match('/([^ ]+)\s+(.+) +: +(.*?)(\/([0-9]*))?$/', trim($line), $match)) continue;
-    $parsed[$match[1]] = (object)array(
-      'depth' => isset($match[5]) ? $match[5] : count(explode('/', $match[1])) - 1,
-      'resource' => $match[1],
-      'title' => $match[2],
-      'description' => $match[3],
-      'sub' => array(),
-      'parent' => array(),
-    );
+  
+  function save_cache() {
+    $this->save_to_file(WEB_ROOT . '/.navigation.cache');
   }
-  return $parsed;
-}
 
-
-/* I HAVE NO IDEA WHAT THIS IS INTENDED TO DO. */
-function ______navigation_build_tree($data, $level = 0) {
-  $tree = array();
-  $current = -1;
-  $data[-1] = array('sub' => array(), 'depth' => 0, 'resource' => '', 'title' => 'Home', 'description' => '');
-  ksort($data);
-  foreach ($data as $i => $entry) {
-    if ($entry['depth'] == $level) {
-      $data[$current]['sub'] = navigation_build_tree($data[$current]['sub'], $level + 1);
-      $current = $i;
+  function load() {
+    if (empty($_REQUEST['_recrawl']) && $menu = self::load_from_file(WEB_ROOT . '/.navigation.cache')) {
+      return $menu;
     }
     else {
-      $data[$current]['sub'][] = $entry;
-      unset($data[$i]);
+      var_dump("CRAWL");
+      $menu = self::load_crawl(WEB_ROOT);
+      $menu->save_cache();
+    }
+    return $menu;
+  }
+
+  function load_from_file($filename) {
+    if (is_file($filename)) {
+      return self::load_from_data(file_get_contents($filename));
     }
   }
-  return $data;
-}
 
-function navigation_build_tree($data) {
-  $parents = array();
-  foreach ($data as $path => $item)
-    foreach ($data as $path2 => $item2)
-      if ((empty($parents[$path]) || strlen($path2) > strlen($parents[$path])) && substr($path, 0, strlen($path2) + 1) == "$path2/")
-        $parents[$path] = $path2;
-  $nonroots = [];
-  foreach ($data as $path => $item) {
-    if (!empty($parents[$path])) {
-      $data[$parents[$path]]->sub[$path] = $item;
-      $nonroots[] = $path;
-    }
+  function load_from_data($data) {
+    list($index, $tree) = unserialize($data);
+    return new self($index, $tree);
   }
-  foreach ($nonroots as $path) {
-    unset($data[$path]);
-  }
-  return $data;
-}
 
-function theme_navigation($tree) {
-  $tree2 = array();
-  foreach ($tree as $entry) {
-    if (!isset($entry->title)) continue;
-    $tree2[$entry->title] = $entry;
-  }
-  ksort($tree2);
-  foreach ($tree as $i=>&$entry) {
-    if (isset($entry->resource)) $entry = l($entry) . theme_navigation($entry->sub);
-    else unset($tree[$i]);
-  }
-  return $tree ? '<ul class="menu"><li>' . implode("</li>\n<li>", $tree) . '</li></ul>' : '';
-}
+  function load_crawl($webroot, $extension = NAV_EXT) {
+    $tree = (object)['sub' => []];
+    $index = [];
+    $uncrawled  = [''];
+    $visited = []; // Prevent infinite recursion.
 
-function l($entry) {
-  if (trim($_SERVER['REQUEST_URI'], '/') == $entry->resource) {
-    return '<strong title="' . $entry->description . '">'. $entry->title . '</strong>';
-  }
-  else {
-    return '<a title="' . $entry->description . '" href="' . $entry->resource . '">' . $entry->title . '</a>';
-  }
-}
+    while ($uncrawled) {
+      $dir = array_pop($uncrawled);
+      $real = realpath("$webroot/$dir");
+      if (empty($visited[$real])) $visited[$real] = TRUE;
+      else continue;
 
-function navigation_crawl($webroot, $extension = NAV_EXT) {
-  $webroot = realpath($webroot);
-  $files = array();
-  $pages = array();
-  $cmd = "find $webroot -name '*.$extension' -not -name '.*'|sort";
-  exec($cmd, $files);
-  foreach ($files as $file) {
-    $data = file($file);
-    $depth = -1;
-    $resource = array(
-      'title' => '',
-      'description' => '',
-      'resource' => substr($file, strlen($webroot) + 1, -1 * strlen($extension) - 1),
-    );
-
-    foreach ($data as $line) {
-      if (preg_match('/([^ ]+?) *= *(.+)/', trim($line), $match)) {
-        if ($match[1] == 'resource') $depth = count(explode('/', $resource['resource'])) - 1;
-        $resource[$match[1]] = $match[2];
+      if ($handle = opendir("$webroot/$dir")) {
+        while (FALSE !== ($item = readdir($handle))) {
+          if ($item == '.' || $item == '..') {
+            continue;
+          }
+          $path  = ltrim("$dir/$item", '/');
+          if (is_dir("$webroot/$path")) {
+            array_push($uncrawled, $path);
+          }
+          elseif (FALSE !== ($i = strrpos($item, '.'))) {
+            $path = ltrim("$dir/" . substr($item, 0, $i), '/');
+          }
+          if (empty($index[$path]) and file_exists("$webroot/$path.$extension")) {
+            $parent = self::_find_parent($tree, $path);
+            $index[$path] = $parent->sub[$path] = self::_parse_file($webroot, $path, $extension);
+          }
+        }
+        closedir($handle);
       }
     }
-    if ($depth >= 0) $resource['description'] .= "/$depth";
-    $pages[$resource['resource']] = $resource;
+    return new self($index, $tree);
   }
-  $out = '';
-  foreach ($pages as $page) {
-    $out .= $page['resource'] . ' ' . $page['title'] . ' : ' . $page['description'] . "\n";
+
+  function html($request) {
+    return self::_html($this->tree->sub, $request);
   }
-  //var_dump($out);
-  file_put_contents("$webroot/.navigation.cache", $out);
+
+  function _html($tree, $request = NULL) {
+    if (empty($tree)) return '';
+    $tree = array_filter($tree, function($entry) { return !empty($entry->title); });
+    usort($tree, function($a, $b) { return strcmp($a->title, $b->title); });
+    $list = [];
+    foreach ($tree as $entry) {
+      $list[] = self::_link($entry, $request) . self::_html($entry->sub);
+    }
+    return '<ul class="menu"><li>' . implode("</li>\n<li>", $list) . '</li></ul>';
+  }
+
+  function _link($entry, $request = NULL) {
+    if ($entry->link) {
+      if ($entry->resource == $request) {
+        return '<strong title="' . $entry->description . '">'. $entry->title . '</strong>';
+      }
+      else {
+        return '<a title="' . $entry->description . '" href="' . $entry->resource . '">' . $entry->title . '</a>';
+      }
+    }
+    else {
+      return '<span title="' . $entry->description . '">' . $entry->title . '</span>';
+    }
+  }
+
+  function _find_parent($tree, $path) {
+    $tokens = explode('/', $path);
+    for ($i = 1; $i < count($tokens); $i++) {
+      $prefix = implode('/', array_slice($tokens, 0, $i));
+      if (isset($tree->sub[$prefix])) {
+        return self::_find_parent($tree->sub[$prefix], $path);
+      }
+    }
+    return $tree;
+  }
+
+  function _parse_file($webroot, $path, $extension) {
+    $data = explode("\n", file_get_contents("$webroot/$path.$extension"));
+    $item = ['title' => '', 'description' => '', 'resource' => $path, 'link' => TRUE];
+    foreach ($data as $line) {
+      if (preg_match('/^(?<key>[a-z]+)\s*=\s*(?<value>.*?)$/', trim($line), $match)) {
+        $item[$match['key']] = $match['value'];
+      }
+    }
+    $item['link'] = ($item['link'] == 'True' || $item['link'] === TRUE);
+    $item['sub'] = [];
+    return (object) $item;
+  }
 }
