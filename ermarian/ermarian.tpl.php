@@ -20,11 +20,11 @@
     <base href="http://<?=$base?>" />
 
     <!-- related documents -->
-    <? if ($links->prev) : ?><link rel="prev"  href="<?=$links->prev?>" /><? endif; ?>
-    <? if ($links->next) : ?><link rel="next"  href="<?=$links->next?>" /><? endif; ?>
-    <? if ($links->index) : ?><link rel="contents" href="<?=$links->index?>" /><? endif; ?>
-    <? if ($links->main) : ?><link rel="start" href="<?=$links->main?>" /><? endif; ?>
-    <? if ($links->about) : ?><link rel="help" href="<?=$links->about?>" /><? endif; ?>
+    <?php if ($links->prev) : ?><link rel="prev"  href="<?=$links->prev?>" /><?php endif; ?>
+    <?php if ($links->next) : ?><link rel="next"  href="<?=$links->next?>" /><?php endif; ?>
+    <?php if ($links->index) : ?><link rel="contents" href="<?=$links->index?>" /><?php endif; ?>
+    <?php if ($links->main) : ?><link rel="start" href="<?=$links->main?>" /><?php endif; ?>
+    <?php if ($links->about) : ?><link rel="help" href="<?=$links->about?>" /><?php endif; ?>
     <!-- /related documents -->
 
     <?php if ($links->rss) { print $links->rss; } ?>
