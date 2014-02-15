@@ -17,7 +17,7 @@ function morse_decode($input, $override = array()) {
   $map = morse_map($override);
 	$codes = explode($map['visual'][MORSE_GAP_LETTER], $input);
   $output = '';
-  
+
 	foreach ($codes as $i => $code) {
 		if (isset($map['decode'][$code])) {
       $output .= $map['decode'][$code];
@@ -33,7 +33,7 @@ function morse_encode($input, $override = array()) {
   $map = morse_map($override);
 	$input = strtoupper($input);
   $output = array();
-  
+
 	foreach (str_split($input) as $i => $char) {
 		if (isset($map['encode'][$char])) {
       $output[] = $map['encode'][$char];
@@ -47,7 +47,7 @@ function morse_encode($input, $override = array()) {
 
 function morse_map($override = array()) {
   static $map;
-  
+
   if (!isset($map)) {
     $map = array();
     $map['visual'] = $override + array(
@@ -57,9 +57,9 @@ function morse_map($override = array()) {
       MORSE_GAP_LETTER => ' ',
       MORSE_GAP_WORD => '/',
     );
-    
+
     $alphabet = explode("\n", trim(file_get_contents(MORSE_CODE_BOOK)));
-    
+
     foreach ($alphabet as $line) {
       $line = explode('|', rtrim($line));
       $line[1] = _morse_process($line[1], $map['visual']);
@@ -67,7 +67,7 @@ function morse_map($override = array()) {
       $map['decode'][$line[1]] = $line[0];
     }
   }
-  
+
   return $map;
 }
 

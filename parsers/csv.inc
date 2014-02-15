@@ -14,7 +14,7 @@ function csv_parse($data, $mode = CSV_MODE_HEADER_ROW, $d = CSV_DEFAULT_DELIM) {
   } else {
     for ($i = 0; $i < count($rows[0]); $i++) $header[$i] = $i;
   }
-  
+
   foreach ($rows as $i => $row) {
     $row = explode($d, trim($row));
     if ($header) {

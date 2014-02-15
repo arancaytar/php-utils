@@ -9,19 +9,19 @@ function math_base_convert($number, $from, $to, $precision = BASE_DEFAULT_PRECIS
   $decimal = !empty($number[1]) ? $number[1] : '';
   $from   = _base_digits($from);
   $to     = _base_digits($to);
-  
+
   if (!_base_validate_digits($from) || !_base_validate_digits($to)) return;
   $from   = _base_values($from);
   $per = count($from);
   $converted = array();
-  
+
   for($i = 0; $i < strlen($integer); $i++) {
     if (!isset($from[$integer[$i]])) return;
-    
+
     $digit = $from[$integer[$i]];
     $power = strlen($integer) - $i -1;
     // Value of the digit is $digit * ($per ^ $power)
-    
+
     // TODO: Find a method that does not involve storing this big number.
     $big = $digit * pow($per, $power);
     $target = array();
@@ -38,12 +38,12 @@ function math_base_convert($number, $from, $to, $precision = BASE_DEFAULT_PRECIS
       $converted[count($target) - $i - 1] += $a;
     }
   }
-  
+
   $small = array();
   if ($decimal) {
     for ($i = 0; $i < strlen($decimal); $i++) {
       if (!isset($from[$decimal[$i]])) return;
-      
+
       $digit = $from[$decimal[$i]];
       $fraction = $digit / pow($per, $i + 1);
       for ($j = 0; $fraction && $j < $precision; $j++) {
@@ -53,7 +53,7 @@ function math_base_convert($number, $from, $to, $precision = BASE_DEFAULT_PRECIS
         $fraction -= $value / pow(strlen($to), $j+1);
       }
     }
-  
+
     $shifting = true;
     while ($shifting) {
       $shifting = false;
@@ -66,7 +66,7 @@ function math_base_convert($number, $from, $to, $precision = BASE_DEFAULT_PRECIS
       }
     }
   }
-  
+
   ksort($converted);
   if (!$converted) $converted = array(0);
   ksort($small);

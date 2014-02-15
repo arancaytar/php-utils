@@ -24,7 +24,7 @@ class Database {
     $db = (object) array('link' => $link, 'config' => $config);
     return $link;
   }
-  
+
   function close() {
     mysql_close($this->link);
   }
@@ -39,7 +39,7 @@ class Database {
     $config = $this->config + array(
       'password' => $passwords[$this->config['user']],
     );
-  
+
     $this->link = @mysql_connect($config['server'], $config['user'], $config['password']);
     @mysql_select_db($config['database'], $this->link);
   }
@@ -55,7 +55,7 @@ class Database {
     $query = preg_replace_callback(DB_QUERY_REGEXP, '_db_escape_args', $query);
     if (isset($_GET['debug'])) var_dump($query);
     $res = mysql_query($query);
-    
+
     return new DatabaseResult($res);
   }
 
@@ -81,12 +81,12 @@ class Database {
       return strtr($sql, array('{' => $db_prefix, '}' => ''));
     }
   }
-  
+
   function table_exists($table) {
     $table = str_replace("'", "", $table);
     return $this->query("SHOW TABLES LIKE '{$table}'")->rows;
   }
-  
+
   function showTables($pre = '') {
     return $this->query("SHOW TABLES LIKE '{%s}%%'", $pre)->col();
   }
@@ -142,14 +142,14 @@ class DatabaseResult {
     $this->rows = @mysql_num_rows($res);
     $this->cols = @mysql_num_fields($res);
   }
-  
+
   function cell() {
     if ($this->rows == 1 && $this->cols == 1) {
       $row = mysql_fetch_array($this->res);
       return $row[0];
     }
   }
-  
+
   function col() {
     if ($this->rows > 0 && $this->cols == 1) {
       $col = array();
@@ -162,7 +162,7 @@ class DatabaseResult {
   function row() {
     return $this->getArray();
   }
-  
+
   function getArray() {
     return mysql_fetch_array($this->res);
   }
@@ -178,16 +178,16 @@ class DatabaseResult {
 
 class DatabaseSchema {
   var $schema;
-  
+
   function DatabaseSchema($schema) {
     $this->schema = $schema;
   }
-  
+
   function create() {
     $sql = array();
     foreach ($schema as $name => $table) {
       $sql = 'CREATE TABLE `{' . $name . '}`';
-      
+
     }
   }
 }

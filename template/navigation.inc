@@ -8,7 +8,7 @@ class NavigationMenu {
     $this->index = $index;
     $this->tree = $tree;
   }
-  
+
   function save_to_file($filename) {
     file_put_contents($filename, $this->save_data());
   }
@@ -16,7 +16,7 @@ class NavigationMenu {
   function save_data() {
     return serialize([$this->index, $this->tree]);
   }
-  
+
   function save_cache() {
     $this->save_to_file(WEB_ROOT . '/.navigation.cache');
   }
@@ -26,7 +26,6 @@ class NavigationMenu {
       return $menu;
     }
     else {
-      var_dump("CRAWL");
       $menu = self::load_crawl(WEB_ROOT);
       $menu->save_cache();
     }
@@ -89,7 +88,7 @@ class NavigationMenu {
     usort($tree, function($a, $b) { return strcmp($a->title, $b->title); });
     $list = [];
     foreach ($tree as $entry) {
-      $list[] = self::_link($entry, $request) . self::_html($entry->sub);
+      $list[] = self::_link($entry, $request) . self::_html($entry->sub, $request);
     }
     return '<ul class="menu"><li>' . implode("</li>\n<li>", $list) . '</li></ul>';
   }

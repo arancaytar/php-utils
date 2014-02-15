@@ -46,16 +46,16 @@ class Dow {
       $this->updated = TRUE;
       return; // already up-to-date.
     }
-    
+
     $data = $this->feed->query($time);
-    
+
     $args = array();
     $vals = array();
     foreach ($data as $date => $row) {
       $args[] = "('%s', %f)";
       array_push($vals, $date, $row['open']);
     }
-    
+
     $this->db->query('INSERT INTO {dow} (`date`, `open`) VALUES ' . implode(', ', $args), $vals);
     return count($vals);
   }

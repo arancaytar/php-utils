@@ -9,7 +9,7 @@ function http($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 
     elseif (isset($url['fields'])) $data = http_query_string($url['fields']);
     $url = $url['url'];
   }
-  
+
   $result = new stdClass();
 
   // Parse the URL and make sure we can handle the schema.
@@ -54,9 +54,9 @@ function http($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 
     // host that do not take into account the port number.
     'Host' => "Host: $host",
     'User-Agent' => 'User-Agent: Ermarian Network (+http://ermarian.net) Drupal/7.0 (+http://drupal.org/)',
-    'Referer' => 'Referer: ' . isset($_SERVER['HTTP_HOST']) ? @$_SERVER['HTTP_HOST'] : '',
+    'Referer' => 'Referer: ' . (isset($_SERVER['HTTP_HOST']) ? @$_SERVER['HTTP_HOST'] : ''),
   );
-  
+
   if ($data) {
     $defaults += array(
       'Content-Type' => 'Content-Type: application/x-www-form-urlencoded',
@@ -73,7 +73,7 @@ function http($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 
     $defaults[$header] = $header . ': ' . $value;
   }
 
-  $request = $method . ' ' . $path . " HTTP/1.0\r\n";
+  $request = $method . ' ' . $path . " HTTP/1.1\r\n";
   $request .= implode("\r\n", $defaults);
   $request .= "\r\n\r\n";
   if ($data) {
