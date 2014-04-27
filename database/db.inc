@@ -1,6 +1,5 @@
 <?php
 
-define('DB_FILE_AUTH', '/home/cburschka/files/auth/.database');
 define('DB_DEFAULT_SERVER', 'mysql.ermarian.net');
 define('DB_DEFAULT_USER', 'admin');
 define('DB_DEFAULT_DATABASE', 'misc');
