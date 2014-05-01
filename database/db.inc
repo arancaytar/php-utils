@@ -1,10 +1,5 @@
 <?php
 
-define('DB_DEFAULT_SERVER', 'mysql.ermarian.net');
-define('DB_DEFAULT_USER', 'admin');
-define('DB_DEFAULT_DATABASE', 'misc');
-define('DB_DEFAULT_PREFIX', '');
-
 define('DB_QUERY_REGEXP', '/(%a|%d|%s|%%|%f|%b)/');
 
 class Database {
