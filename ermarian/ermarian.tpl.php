@@ -36,6 +36,7 @@
           media="all"
           href="css/default.css" />
     <link rel="stylesheet"
+          title="Screen"
           type="text/css"
           media="screen"
           href="css/screen.css" />
