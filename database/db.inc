@@ -7,7 +7,7 @@ class Database {
 
   function Database($config = array()) {
     $this->config = $config;
-    $this->link = $this->_connect();
+    $this->_connect();
   }
 
   function close() {
