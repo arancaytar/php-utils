@@ -7,16 +7,7 @@ class Database {
 
   function Database($config = array()) {
     $this->config = $config;
-    if (!is_array($this->config)) $this->config = array('database' => $config);
-    $this->config += array(
-      'server'   => DB_DEFAULT_SERVER,
-      'user'     => DB_DEFAULT_USER,
-      'database' => DB_DEFAULT_DATABASE,
-      'prefix'   => DB_DEFAULT_PREFIX,
-    );
-    $link = $this->_connect();
-    $db = (object) array('link' => $link, 'config' => $config);
-    return $link;
+    $this->link = $this->_connect();
   }
 
   function close() {
@@ -24,7 +15,7 @@ class Database {
   }
 
   function _connect() {
-    $passwords = explode("\n", trim(file_get_contents(DB_FILE_AUTH)));
+    $passwords = explode("\n", trim(file_get_contents($this->config['authfile'])));
     foreach ($passwords as $line) {
       $line = explode(":", trim($line));
       if (!isset($line[1])) continue;
