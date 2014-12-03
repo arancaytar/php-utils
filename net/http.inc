@@ -91,10 +91,10 @@ function http($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 
   fclose($fp);
 
   // Parse response.
-  list($split, $result->data) = explode("\r\n\r\n", $response, 2);
+  @list($split, $result->data) = explode("\r\n\r\n", $response, 2);
   $split = preg_split("/\r\n|\n|\r/", $split);
 
-  list($protocol, $code, $text) = explode(' ', trim(array_shift($split)), 3);
+  @list($protocol, $code, $text) = explode(' ', trim(array_shift($split)), 3);
   $result->headers = array();
 
   // Parse headers.
@@ -108,6 +108,32 @@ function http($url, $headers = array(), $method = 'GET', $data = NULL, $retry = 
     else {
       $result->headers[$header] = trim($value);
     }
+  }
+
+  if (@$result->headers['Transfer-Encoding'] === 'chunked') {
+    $data = explode("\r\n", $result->data);
+    $data2 = [];
+    $x = 0;
+    $y = 0;
+    $l = [];
+    foreach ($data as $line) {
+      if ($x == 0) {
+        if ($line == '0') break;
+        $y = hexdec($line);
+        $x=1;
+        continue;
+      }
+      else if ($x == 1) {
+        $l[] = $line;
+        $y -= strlen($line);
+        if ($y == 0) {
+          $data2[] = implode("\r\n", $l);
+          $l = [];
+          $x = 0;
+        }
+      }
+    }
+    $result->data = implode('', $data2);
   }
 
   $responses = array(
