@@ -98,8 +98,9 @@
           </a>
           This page can be viewed in any standards-compliant browser.<br/>
           Recommended:
-          <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,
-          <a href="http://www.opera.com">Opera</a>, <a href="http://www.chromium.org//">Chromium</a>
+          <a class="external" href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,
+          <a class="external" href="http://www.opera.com">Opera</a>,
+          <a class="external" href="http://www.chromium.org//">Chromium</a>
         </div>
         <!-- /validation -->
 
