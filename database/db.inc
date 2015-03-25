@@ -41,7 +41,7 @@ class Database {
     if (isset($_GET['debug'])) var_dump($query);
     $res = mysql_query($query);
 
-    return new DatabaseResult($res);
+    return new DatabaseResult($res, mysql_affected_rows());
   }
 
   function _prefix_tables($sql) {
@@ -122,8 +122,9 @@ function _db_arg($type, $arg) {
 }
 
 class DatabaseResult {
-  function DatabaseResult($res) {
+  function DatabaseResult($res, $affected) {
     $this->res = $res;
+    $this->affected = $affected;
     $this->rows = @mysql_num_rows($res);
     $this->cols = @mysql_num_fields($res);
   }
