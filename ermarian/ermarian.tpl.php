@@ -79,7 +79,7 @@
 
         <!-- /ads -->
 
-        <h2><?=$title?></h2>
+        <?php if ($title) { ?><h2><?=$title?></h2><?php } ?>
 
         <!-- page-inner -->
         <div id="page-inner">
