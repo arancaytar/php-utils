@@ -110,7 +110,7 @@
           <a class="mail" title="arancaytar.ilyaran@gmail.com" href="<?=urlencode(htmlentities('mailto:"Arancaytar Ilyaran" <arancaytar.ilyaran@gmail.com>?subject=[ermarian.net] (enter subject)&body=
 --
 Sent by ermarian.net contact link'))?>">Arancaytar</a>,
-          &copy; 2006-2014, all rights reserved.
+          &copy; 2006-2015, all rights reserved.
           No responsibility is taken for the content of external links, which are marked by
           <img src="images/external.png" alt="a blue arrow icon" />.
         </div>
