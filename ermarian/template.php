@@ -13,7 +13,7 @@ define('TEMPLATE_AD', <<<END
                         //-->
                         </script>
                         <script type="text/javascript"
-                        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                        src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
                         </script>
 END
 );
@@ -32,7 +32,7 @@ function theme_page($variables) {
     'options' => array(
       'content.add_id' => TRUE,
     ),
-    'base' => $_SERVER['HTTP_HOST'],
+    'base' => '',
     'request' => '',
   ];
   $navigation = NavigationMenu::load();

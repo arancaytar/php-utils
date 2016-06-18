@@ -1,6 +1,6 @@
 <!DOCTYPE html>
   <!--
-    Template for Ermarian Network (http://ermarian.net/)
+    Template for Ermarian Network (https://ermarian.net/)
     Copyright Arancaytar <arancaytar@ermarian.net> 2006-2013.
   -->
 <html>
@@ -17,7 +17,7 @@
 
     <!-- /meta -->
 
-    <base href="http://<?=$base?>" />
+    <base href="/" />
 
     <!-- related documents -->
     <?php if ($links->prev) : ?><link rel="prev"  href="<?=$links->prev?>" /><?php endif; ?>
@@ -90,17 +90,17 @@
 
         <!-- site validation -->
         <div class="filled-box" id="footer">
-          <a href="http://validator.w3.org/check?uri=referer">
+          <a href="https://validator.w3.org/check?uri=referer">
             <img src="images/validation/valid-html5.png" alt="Valid HTML 5 Strict" height="31" width="88" style="float:left" />
           </a>
-          <a href="http://jigsaw.w3.org/css-validator/validator">
+          <a href="https://jigsaw.w3.org/css-validator/validator">
             <img style="border:0;width:88px;height:31px;float:left" src="images/validation/valid-css.png" alt="Valid CSS" />
           </a>
           This page can be viewed in any standards-compliant browser.<br/>
           Recommended:
-          <a class="external" href="http://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,
-          <a class="external" href="http://www.opera.com">Opera</a>,
-          <a class="external" href="http://www.chromium.org//">Chromium</a>
+          <a class="external" href="https://www.spreadfirefox.com/?q=affiliates&amp;id=96065&amp;t=54">Firefox</a>,
+          <a class="external" href="https://www.opera.com">Opera</a>,
+          <a class="external" href="https://www.chromium.org//">Chromium</a>
         </div>
         <!-- /validation -->
 
