@@ -21,7 +21,7 @@ class NavigationMenu {
     $this->save_to_file(WEB_ROOT . '/.navigation.cache');
   }
 
-  function load() {
+  static function load() {
     if (empty($_REQUEST['_recrawl']) && $menu = self::load_from_file(WEB_ROOT . '/.navigation.cache')) {
       return $menu;
     }
@@ -32,15 +32,15 @@ class NavigationMenu {
     return $menu;
   }
 
-  function load_from_file($filename) {
+  static function load_from_file($filename) {
     if (is_file($filename)) {
       return self::load_from_data(file_get_contents($filename));
     }
   }
 
-  function load_from_data($data) {
+  static function load_from_data($data) {
     list($index, $tree) = unserialize($data);
-    return new self($index, $tree);
+    return new static($index, $tree);
   }
 
   function load_crawl($webroot, $extension = NAV_EXT) {
@@ -82,7 +82,7 @@ class NavigationMenu {
     return self::_html($this->tree->sub, $request);
   }
 
-  function _html($tree, $request = NULL) {
+  static function _html($tree, $request = NULL) {
     if (empty($tree)) return '';
     $tree = array_filter($tree, function($entry) { return !empty($entry->title); });
     usort($tree, function($a, $b) { return strcmp($a->title, $b->title); });
@@ -93,7 +93,7 @@ class NavigationMenu {
     return '<ul class="menu"><li>' . implode("</li>\n<li>", $list) . '</li></ul>';
   }
 
-  function _link($entry, $request = NULL) {
+  static function _link($entry, $request = NULL) {
     if ($entry->link) {
       if ($entry->resource == $request) {
         return '<strong title="' . $entry->description . '">'. $entry->title . '</strong>';
@@ -107,7 +107,7 @@ class NavigationMenu {
     }
   }
 
-  function _find_parent($tree, $path) {
+  static function _find_parent($tree, $path) {
     $tokens = explode('/', $path);
     for ($i = 1; $i < count($tokens); $i++) {
       $prefix = implode('/', array_slice($tokens, 0, $i));
@@ -118,7 +118,7 @@ class NavigationMenu {
     return $tree;
   }
 
-  function _parse_file($webroot, $path, $extension) {
+  static function _parse_file($webroot, $path, $extension) {
     $data = explode("\n", file_get_contents("$webroot/$path.$extension"));
     $item = ['title' => '', 'description' => '', 'resource' => $path, 'link' => TRUE];
     foreach ($data as $line) {
